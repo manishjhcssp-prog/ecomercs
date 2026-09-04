@@ -23,6 +23,45 @@ What makes NovaMart special is our **AI Personal Shopper**. Integrated directly 
 * **Order Management:** See every order placed, update their status, and handle cancellations.
 * **Review Moderation:** Review and approve customer feedback before it appears on the public store.
 
+## 🧠 Architecture Overview (Razorpay AI Buildathon)
+
+The integration flow designed for **Track 01 — AI Growth & Agentic Commerce**:
+
+```mermaid
+graph TD
+  subgraph Frontend
+    ChatUI[Chat Interface \n 'chat.js']
+    RazorpayModal[Razorpay Checkout]
+  end
+
+  subgraph Backend API
+    AIController[AI Controller]
+    OrderController[Order Controller]
+  end
+
+  subgraph LLM & Persistence
+    LLM[OpenRouter Engine]
+    DB[(MongoDB)]
+  end
+
+  subgraph Razorpay
+    Gateway[Razorpay Test API]
+  end
+
+  ChatUI -- 1. Chat Prompt --> AIController
+  AIController -- 2. Context + Tools --> LLM
+  LLM -- 3. Execute 'add_to_cart' (Cross-sell) --> AIController
+  LLM -- 4. Tool: 'prepare_checkout' --> AIController
+  AIController -- 5. 'checkoutIntent' --> ChatUI
+  ChatUI -- 6. Renders Pay Button --> ChatUI
+  ChatUI -- 7. POST /api/orders (aiAssisted=true) --> OrderController
+  OrderController -- 8. Transactional Order Save --> DB
+  OrderController -- 9. Return Order ID --> ChatUI
+  ChatUI -- 10. Open Payment Modal --> RazorpayModal
+  RazorpayModal -- 11. Process Payment --> Gateway
+  Gateway -- 12. Webhook Verification --> OrderController
+```
+
 ---
 
 ## 🚀 Trying It Out (For Developers)

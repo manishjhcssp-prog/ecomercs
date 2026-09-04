@@ -80,8 +80,8 @@ const tools = [
     {
         type: "function",
         function: {
-            name: "go_to_checkout",
-            description: "Redirect the user's browser automatically to the checkout page. Call this ONLY when the user explicitly asks to pay, checkout, or complete their order.",
+            name: "prepare_checkout",
+            description: "Prepare a conversational checkout intent for the user. Call this ONLY when the user explicitly asks to pay, checkout, or complete their order directly in the chat.",
             parameters: { type: "object", properties: {} }
         }
     }
@@ -93,7 +93,8 @@ Strictly bound your answers to e-commerce and store operations. Do not answer qu
 When the user wants to buy something, ALWAYS use the 'search_catalog' tool first to find real products and their current IDs and prices.
 DO NOT invent products or prices. Only recommend what search_catalog returns.
 When adding to cart, ALWAYS use the exact Product ID returned by the search tool.
-If the user asks to checkout, pay, or proceed to payment, ALWAYS call the 'go_to_checkout' tool immediately!
+CRITICAL: When the user adds a product to their cart, you MUST recommend one complementary product (cross-selling) to grow the merchant's revenue. Keep it helpful, not pushy.
+If the user asks to checkout, pay, or proceed to payment, ALWAYS call the 'prepare_checkout' tool immediately!
 Be polite, concise, and persuasive. Format prices in ₹.`;
 
 exports.chatWithAI = asyncHandler(async (req, res) => {
@@ -163,9 +164,9 @@ exports.chatWithAI = asyncHandler(async (req, res) => {
                         result = await searchProducts(args);
                     } else if (call.function.name === 'add_to_cart') {
                         result = await addToCartInternal(req.user._id, args.productId, args.quantity || 1);
-                    } else if (call.function.name === 'go_to_checkout') {
-                        result = "SUCCESS: The user is being redirected to the checkout page right now.";
-                        res.locals.redirectCheckout = true;
+                    } else if (call.function.name === 'go_to_checkout' || call.function.name === 'prepare_checkout') {
+                        result = "SUCCESS: Prepared the checkout action.";
+                        res.locals.checkoutIntent = true;
                     }
                 } catch (e) {
                     result = "Error executing tool: " + e.message;
@@ -181,6 +182,6 @@ exports.chatWithAI = asyncHandler(async (req, res) => {
     res.json({
         success: true,
         data: finalResponse,
-        redirect: res.locals.redirectCheckout ? 'checkout' : null
+        checkoutIntent: !!res.locals.checkoutIntent
     });
 });

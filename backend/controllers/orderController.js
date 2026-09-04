@@ -131,6 +131,8 @@ exports.createOrder = asyncHandler(async (req, res) => {
         tax,
         total,
         paymentMethod,
+        aiAssisted: req.body && req.body.aiAssisted === true,
+        aiInteractions: (req.body && Number(req.body.aiInteractions)) || 0,
       }],
       { session }
     );

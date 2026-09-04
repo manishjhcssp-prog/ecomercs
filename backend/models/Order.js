@@ -94,6 +94,10 @@ const orderSchema = new mongoose.Schema(
     paidAt: { type: Date, default: null },
 
     cancelledAt: { type: Date, default: null },
+
+    /** AI Buildathon Audit Trail (Phase 9) */
+    aiAssisted: { type: Boolean, default: false },
+    aiInteractions: { type: Number, default: 0 },
   },
   { timestamps: true, toJSON: { versionKey: false } }
 );

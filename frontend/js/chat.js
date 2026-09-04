@@ -154,13 +154,48 @@
                     refreshCartFromServer().catch(console.error);
                 }
 
-                // Handle Automatic Redirection if AI triggered checkout
-                if (res.redirect === 'checkout') {
+                // Handle Conversational Checkout
+                if (res.checkoutIntent) {
+                    const btnId = 'chat-pay-' + Date.now();
+                    const btnHtml = `<br/><button id="${btnId}" class="btn btn-primary btn-sm" style="margin-top:10px; width:100%; border-radius: 8px;">Pay Now with Razorpay</button>`;
+                    appendMsgUI('Your cart is ready! Click below to securely complete your payment with a single click:' + btnHtml, 'ai', false);
                     setTimeout(() => {
-                        if (typeof storePage === 'function') {
-                            window.location.assign(storePage('checkout.html'));
+                        const btn = document.getElementById(btnId);
+                        if (btn) {
+                            btn.addEventListener('click', async () => {
+                                btn.disabled = true;
+                                btn.textContent = 'Preparing payment...';
+                                try {
+                                    // 1. Get default address
+                                    const addrRes = await api('/users/addresses', { auth: true });
+                                    const defaultAddr = addrRes.data.find(a => a.isDefault) || addrRes.data[0];
+                                    if (!defaultAddr) throw new Error("Please add a delivery address in your Account settings first.");
+
+                                    // 2. Create Order flag as AI assisted
+                                    btn.textContent = 'Authorizing...';
+                                    const orderRes = await api('/orders', {
+                                        method: 'POST', auth: true,
+                                        body: { addressId: defaultAddr.id, paymentMethod: 'razorpay', aiAssisted: true, aiInteractions: history.length }
+                                    });
+                                    const orderId = orderRes.data._id || orderRes.data.id;
+
+                                    // 3. Complete Razorpay checkout natively in chat
+                                    btn.textContent = 'Waiting for payment...';
+                                    await payWithRazorpay(String(orderId));
+
+                                    // 4. Success handling
+                                    appendMsgUI('**Payment successful! ✅** Your order has been securely placed. Thank you for shopping with NovaMart.', 'ai', false);
+                                    btn.style.display = 'none';
+                                    if (typeof refreshCartFromServer === 'function') refreshCartFromServer();
+
+                                } catch (e) {
+                                    appendMsgUI('Checkout error: ' + (e.message || 'Payment failed'), 'ai', true);
+                                    btn.disabled = false;
+                                    btn.textContent = 'Pay Now with Razorpay';
+                                }
+                            });
                         }
-                    }, 1500); // give the user time to read the message
+                    }, 50);
                 }
 
             } else {
