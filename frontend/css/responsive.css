@@ -1,0 +1,63 @@
+/* ==========================================================================
+   NovaMart — responsive.css
+   Breakpoints: 1080px · 900px · 600px
+   Component-level mobile rules (navbar) live in navbar.css.
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); }
+  .hero-inner { gap: 32px; }
+}
+
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; padding-block: 44px; }
+  .hero-art { min-height: 280px; max-width: 520px; }
+
+  .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .catalog { grid-template-columns: 1fr; }
+  .filters { position: static; display: none; }
+  .filters.open { display: block; }
+  #filters-toggle { display: inline-flex; }
+
+  .pd { grid-template-columns: 1fr; }
+  .pd-gallery { position: static; }
+
+  .cart-layout { grid-template-columns: 1fr; }
+  .cart-summary { position: static; }
+
+  .footer-grid { grid-template-columns: 1fr 1fr; padding-block: 40px 32px; }
+}
+
+@media (max-width: 600px) {
+  .section { padding-block: 40px; }
+
+  .hero h1 { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+  .hero-cta .btn { flex: 1; }
+  .float-chip { font-size: 0.76rem; padding: 0.45rem 0.65rem; }
+
+  .category-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .card-body { padding: 12px; }
+  .price { font-size: 1rem; }
+
+  .catalog-toolbar { align-items: stretch; flex-direction: column; }
+  .toolbar-right { justify-content: space-between; }
+  .catalog-search { max-width: none; }
+
+  .cart-row { grid-template-columns: 72px 1fr; }
+  .cart-row img { width: 72px; height: 72px; }
+  .cart-row-right {
+    grid-column: 1 / -1;
+    flex-direction: row; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border); padding-top: 10px;
+  }
+
+  .pd-actions .btn { flex: 1; }
+
+  .auth-card { padding: 24px 20px; }
+
+  .footer-grid { grid-template-columns: 1fr; gap: 26px; }
+  .footer-bottom { flex-direction: column; }
+}

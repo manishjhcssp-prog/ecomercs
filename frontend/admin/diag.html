@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store">
+<title>NovaMart Diagnostic</title>
+<style>
+  body{font-family:system-ui,sans-serif;background:#fff;color:#222;max-width:640px;margin:40px auto;padding:0 20px}
+  h1{font-size:20px} ul{padding-left:0;list-style:none}
+  li{padding:8px 10px;border:1px solid #ddd;border-radius:8px;margin-bottom:8px;font-size:14px}
+  .ok{border-color:#157347;background:#e5f6ec}.bad{border-color:#b02a37;background:#fde8e8}
+  .wait{color:#777}
+</style>
+</head>
+<body>
+<h1>NovaMart Browser Diagnostic</h1>
+<p>If you can read this, your browser reaches the dev-server and renders HTML.</p>
+<ul id="checks">
+  <li class="wait" id="c-js">JavaScript execution ??? checking???</li>
+  <li class="wait" id="c-syntax">Modern JS syntax support (?., ??) ??? pending???</li>
+  <li class="wait" id="c-storage">localStorage access ??? pending???</li>
+  <li class="wait" id="c-api">API server (:5000) reachable ??? pending???</li>
+  <li class="wait" id="c-core">admin-core.js loads &amp; defines ADMIN ??? pending???</li>
+  <li class="wait" id="c-page">admin/index.html assets ??? pending???</li>
+</ul>
+<div id="verdict"></div>
+
+<script>
+  /* 1) If this inline ES5 script runs, basic JS works. */
+  (function(){var el=document.getElementById('c-js');el.className='ok';el.innerHTML='??? JavaScript execution works';})();
+</script>
+<script>
+  /* 2) Modern syntax capability ??? the exact features NovaMart scripts use */
+  var syntaxOK = false;
+  try { new Function('o', 'return o?.a ?? "d";'); syntaxOK = true; } catch (e) { syntaxOK = false; }
+  (function(){
+    var el=document.getElementById('c-syntax');
+    if (syntaxOK) {
+      el.className='ok';
+      el.textContent='??? Browser supports modern JS syntax (optional chaining)';
+    } else {
+      el.className='bad';
+      el.innerHTML='??? <b>Your browser cannot parse the site\'s JavaScript (too old).</b><br>' +
+        'NovaMart needs Chrome/Edge 80+, Firefox 74+, or Safari 13.1+.<br>' +
+        'Please update your browser or switch to another one ??? this alone explains every blank page.';
+      document.getElementById('verdict').innerHTML =
+        '<div style="border:2px solid #b02a37;background:#fde8e8;padding:14px;border-radius:10px;margin-top:14px">' +
+        '<b>VERDICT:</b> outdated browser. Nothing is wrong with the server or the site code.</div>';
+    }
+  })();
+
+  /* 2b) localStorage */
+  try {
+    localStorage.setItem('__diag','1');
+    var v = localStorage.getItem('__diag');
+    localStorage.removeItem('__diag');
+    var el=document.getElementById('c-storage');
+    if(v==='1'){el.className='ok';el.textContent='??? localStorage accessible';}
+    else {el.className='bad';el.textContent='??? localStorage returned wrong value';}
+  } catch(e){
+    var el=document.getElementById('c-storage');
+    el.className='bad';
+    el.textContent='??? localStorage blocked ('+e.message+') ??? disable "block all cookies"/private mode quirks';
+  }
+
+  /* 3) API reachability */
+  fetch('http://127.0.0.1:5000/api/health')
+    .then(function(r){return r.json();})
+    .then(function(j){
+      var el=document.getElementById('c-api');
+      el.className='ok';
+      el.textContent='??? API reachable ?? database='+j.data.database;
+    })
+    .catch(function(e){
+      var el=document.getElementById('c-api');
+      el.className='bad';
+      el.textContent='??? API unreachable: '+e.message+' (is the API running? firewall? extension blocking?)';
+    });
+
+  /* 4) Load admin-core.js as a REAL <script> tag (browser semantics), then
+        probe the shared global lexical scope from a SECOND injected script. */
+  var s = document.createElement('script');
+  s.src = 'js/admin-core.js?v=' + new Date().getTime();
+  s.onload = function(){
+    var probe = document.createElement('script');
+    probe.textContent =
+      'window.__ADMIN_OK = (typeof ADMIN !== "undefined" && typeof ADMIN.boot === "function");' +
+      'window.__CORE_ERR = window.__CORE_ERR || null;';
+    s.onerror; // no-op
+    document.head.appendChild(probe);
+    var el=document.getElementById('c-core');
+    // give the inline probe a tick to execute
+    setTimeout(function(){
+      if (window.__ADMIN_OK === true) {
+        el.className='ok'; el.textContent='??? admin-core.js executed ??? ADMIN object present';
+      } else {
+        el.className='bad';
+        el.innerHTML='??? admin-core.js loaded but did not define ADMIN ??? it died during execution.' +
+          '<br>Open F12 ??? Console for the exact error line.';
+      }
+    }, 50);
+  };
+  s.onerror = function(){
+    var el=document.getElementById('c-core');
+    el.className='bad'; el.textContent='??? admin-core.js FAILED to download/load (extension or cache issue)';
+  };
+  document.head.appendChild(s);
+
+  /* 5) Probe the real admin page assets */
+  fetch('js/admin.js?v=' + new Date().getTime())
+    .then(function(r){
+      var el=document.getElementById('c-page');
+      el.className = r.ok ? 'ok' : 'bad';
+      el.textContent = r.ok ? '??? admin.js downloadable (HTTP '+r.status+')' : '??? admin.js HTTP '+r.status;
+    })
+    .catch(function(e){
+      var el=document.getElementById('c-page');
+      el.className='bad'; el.textContent='??? admin.js fetch failed: '+e.message;
+    });
+</script>
+<noscript><p style="color:#b02a37"><b>JavaScript is DISABLED in your browser ??? that alone blanks out the whole site.</b></p></noscript>
+<hr>
+<p style="font-size:13px;color:#667">Open this same page in an Incognito/Private window too.
+If results differ between normal and Incognito, a browser extension is the culprit.</p>
+</body>
+</html>

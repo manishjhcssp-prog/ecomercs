@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Create a NovaMart account." />
+  <title>Create account · NovaMart</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body data-base="../">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <button class="icon-btn nav-toggle" id="nav-toggle" aria-expanded="false"
+        aria-controls="mobile-nav" aria-label="Open menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">N</span>NovaMart</a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="../index.html#categories">Categories</a></li>
+          <li><a href="products.html?sale=1">Deals</a></li>
+        </ul>
+      </nav>
+
+      <form class="nav-search" action="products.html" method="get" role="search">
+        <input class="input" type="search" name="q" placeholder="Search products..." aria-label="Search products" />
+        <button type="submit" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        </button>
+      </form>
+
+      <div class="header-actions">
+        <div class="wish-wrap">
+          <button class="icon-btn" id="wish-btn" aria-haspopup="true" aria-expanded="false" aria-label="Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20.8C6.9 17 3.5 13.7 3.5 10a4.6 4.6 0 0 1 4.6-4.6c1.6 0 3 .8 3.9 2.1a4.8 4.8 0 0 1 3.9-2.1A4.6 4.6 0 0 1 20.5 10c0 3.7-3.4 7-8.5 10.8Z"/></svg>
+            <span class="count-badge" id="wish-count" hidden>0</span>
+          </button>
+          <div class="wish-pop" id="wish-pop" hidden>
+            <h3>Wishlist</h3>
+            <ul id="wish-list"></ul>
+          </div>
+        </div>
+        <a class="icon-btn" href="cart.html" aria-label="Shopping cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/><path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h7.6a1.5 1.5 0 0 0 1.5-1.2L19.5 8H6"/></svg>
+          <span class="count-badge" id="cart-count" hidden>0</span>
+        </a>
+        <a class="icon-btn" href="login.html" aria-current="page" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="mobile-nav" id="mobile-nav" hidden>
+      <nav aria-label="Mobile">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="../index.html#categories">Categories</a></li>
+          <li><a href="products.html?sale=1">Deals</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="login.html">Sign in</a></li>
+        </ul>
+      </nav>
+      <form class="nav-search" action="products.html" method="get" role="search">
+        <input class="input" type="search" name="q" placeholder="Search products..." aria-label="Search products" />
+        <button type="submit" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        </button>
+      </form>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container auth-wrap">
+      <div class="auth-card">
+        <h1>Create account</h1>
+        <p class="auth-sub">Join NovaMart to shop faster and track your orders.</p>
+
+        <form id="register-form" data-auth-form="register">
+          <div class="field">
+            <label for="reg-name">Full name</label>
+            <input class="input" id="reg-name" type="text" required
+              autocomplete="name" placeholder="Your name" />
+          </div>
+
+          <div class="field">
+            <label for="reg-email">Email address</label>
+            <input class="input" id="reg-email" type="email" required
+              autocomplete="email" placeholder="you@example.com" />
+          </div>
+
+          <div class="field">
+            <label for="reg-password">Password</label>
+            <div class="pw-wrap">
+              <input class="input" id="reg-password" type="password" required minlength="8"
+                autocomplete="new-password" placeholder="At least 8 characters" />
+              <button class="pw-toggle" type="button" data-pw-toggle
+                aria-controls="reg-password" aria-pressed="false" aria-label="Show or hide password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.8"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="reg-confirm">Confirm password</label>
+            <input class="input" id="reg-confirm" type="password" required minlength="8"
+              autocomplete="new-password" data-match="reg-password" placeholder="Repeat your password" />
+          </div>
+
+          <div class="field">
+            <label class="check-row">
+              <input type="checkbox" id="reg-terms" required />
+              <span>I agree to the <a href="#main">Terms &amp; Conditions</a> and
+                <a href="#main">Privacy Policy</a> (demo links).</span>
+            </label>
+          </div>
+
+          <button class="btn btn-primary btn-block" type="submit">Create account</button>
+        </form>
+
+        <p class="auth-alt">Already have an account? <a href="login.html">Sign in</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="border-top:0">
+      <span>© 2026 NovaMart — demo e-commerce project.</span>
+      <span>Built with HTML, CSS &amp; JavaScript.</span>
+    </div>
+  </footer>
+
+  <script src="../js/app.js?v=20260910a" defer></script>
+</body>
+</html>
