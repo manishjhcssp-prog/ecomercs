@@ -22,20 +22,22 @@ const mongoose = require('mongoose');
 const Product = require('../models/Product');
 
 const SAMPLE_PRODUCTS = [
-  { name: 'Wireless Noise-Canceling Headphones', description: 'Over-ear Bluetooth headphones with active noise cancellation, deep bass and a lightweight fit for all-day listening.', price: 1999, originalPrice: 2999, category: 'Electronics', brand: 'NovaAudio', rating: 4.5, numReviews: 1284, stock: 24, isFeatured: true },
-  { name: 'Smart Fitness Watch', description: 'Track steps, heart rate, sleep and workouts on a bright color display with up to 10 days of battery life.', price: 2499, originalPrice: 3499, category: 'Electronics', brand: 'NovaFit', rating: 4.3, numReviews: 932, stock: 18, isFeatured: true },
-  { name: '4K Action Camera', description: 'Rugged 4K action camera with image stabilization, waterproof body and a wide-angle lens for adventure footage.', price: 5499, originalPrice: 6999, category: 'Electronics', brand: 'NovaCam', rating: 4.4, numReviews: 415, stock: 0, isFeatured: true },
-  { name: 'Classic Cotton T-Shirt', description: 'Soft 100% combed cotton t-shirt with a regular fit and reinforced stitching — an everyday essential.', price: 499, originalPrice: 999, category: 'Fashion', brand: 'UrbanNova', rating: 4.2, numReviews: 2210, stock: 150, isFeatured: true },
-  { name: 'Slim-Fit Denim Jeans', description: 'Stretchable slim-fit jeans with a clean look, comfortable all-day stretch and durable denim weave.', price: 1299, originalPrice: 2199, category: 'Fashion', brand: 'UrbanNova', rating: 4.1, numReviews: 876, stock: 64, isFeatured: true },
-  { name: 'Running Sneakers', description: 'Lightweight running sneakers with cushioned midsole support and a breathable knit upper.', price: 2299, originalPrice: 3299, category: 'Sports', brand: 'SwiftStep', rating: 4.6, numReviews: 1540, stock: 45, isFeatured: true },
-  { name: 'Vitamin C Glow Serum', description: 'Lightweight vitamin C serum that brightens skin tone and reduces dullness with regular use.', price: 649, originalPrice: 999, category: 'Beauty', brand: 'GlowLab', rating: 4.4, numReviews: 3105, stock: 210, isFeatured: true },
-  { name: 'Matte Lipstick Set', description: 'Set of five long-wear matte lipsticks in everyday nude and bold shades with a non-drying finish.', price: 799, originalPrice: 1299, category: 'Beauty', brand: 'GlowLab', rating: 4.0, numReviews: 654, stock: 88, isFeatured: true },
-  { name: 'Ceramic Dinner Set (16 pc)', description: 'Elegant 16-piece glazed ceramic dinner set that is microwave and dishwasher safe — service for four.', price: 2499, originalPrice: 3999, category: 'Home', brand: 'HomeHearth', rating: 4.3, numReviews: 289, stock: 0, isFeatured: false },
-  { name: 'LED Table Lamp', description: 'Minimal LED table lamp with three brightness levels and a warm, flicker-free light for desk or bedside.', price: 899, originalPrice: 1499, category: 'Home', brand: 'HomeHearth', rating: 4.2, numReviews: 512, stock: 73, isFeatured: false },
-  { name: 'Leather Crossbody Bag', description: 'Compact genuine-leather crossbody bag with an adjustable strap and secure zip compartments.', price: 1899, originalPrice: 2999, category: 'Accessories', brand: 'NovaLeather', rating: 4.5, numReviews: 743, stock: 31, isFeatured: false },
-  { name: 'Minimalist Analog Watch', description: 'Slim analog watch with a scratch-resistant glass face, stainless-steel case and quick-release strap.', price: 2999, originalPrice: 4499, category: 'Accessories', brand: 'NovaTime', rating: 4.6, numReviews: 980, stock: 26, isFeatured: false },
-  { name: 'Yoga Mat 6 mm', description: 'High-density 6 mm yoga mat with an anti-slip textured surface and carrying strap.', price: 749, originalPrice: 1299, category: 'Sports', brand: 'SwiftStep', rating: 4.4, numReviews: 1120, stock: 96, isFeatured: false },
-  { name: 'Stainless Steel Water Bottle', description: 'Double-walled vacuum-insulated steel bottle that keeps drinks cold for 24 h or hot for 12 h.', price: 599, originalPrice: 899, category: 'Sports', brand: 'SwiftStep', rating: 4.3, numReviews: 2015, stock: 240, isFeatured: false },
+  // Pair 1: Laptop & Accessories
+  { name: 'MacBook Pro M3', description: '14-inch MacBook Pro premium laptop with M3 chip, 18GB Unified Memory, and 512GB SSD. Ultimate performance for pros.', price: 169900, originalPrice: 169900, category: 'Electronics', brand: 'Apple', rating: 4.9, numReviews: 432, stock: 45, isFeatured: true },
+  { name: 'Premium Leather Laptop Sleeve', description: 'Handcrafted full-grain leather sleeve designed to perfectly fit 13 & 14-inch laptops.', price: 4999, originalPrice: 6500, category: 'Accessories', brand: 'NovaLeather', rating: 4.8, numReviews: 120, stock: 85, isFeatured: true },
+  { name: 'Magic Mouse 3', description: 'Wireless and rechargeable. Features an optimized foot design that lets it glide smoothly across your desk.', price: 8500, originalPrice: 9500, category: 'Electronics', brand: 'Apple', rating: 4.5, numReviews: 310, stock: 50, isFeatured: false },
+
+  // Pair 2: Smartphone & Cases
+  { name: 'iPhone 15 Pro Max', description: 'Forged in titanium. Features the A17 Pro chip and a revolutionary 5x Telephoto camera. The ultimate smartphone.', price: 159900, originalPrice: 159900, category: 'Electronics', brand: 'Apple', rating: 4.8, numReviews: 890, stock: 35, isFeatured: true },
+  { name: 'MagSafe Clear Case', description: 'Thin, light, and easy to grip securely. Shows off the brilliant colored finish of your iPhone while providing extra protection.', price: 4900, originalPrice: 5900, category: 'Accessories', brand: 'Apple', rating: 4.6, numReviews: 420, stock: 120, isFeatured: false },
+
+  // Pair 3: Audio
+  { name: 'Sony WH-1000XM5 Headphones', description: 'Industry leading noise cancellation with two processors controlling eight microphones.', price: 29990, originalPrice: 34990, category: 'Electronics', brand: 'Sony', rating: 4.7, numReviews: 1205, stock: 60, isFeatured: true },
+  { name: 'Anodized Aluminum Headphone Stand', description: 'Minimalist desk stand to safely display and store your premium over-ear headphones.', price: 1999, originalPrice: 2499, category: 'Accessories', brand: 'NovaDesign', rating: 4.3, numReviews: 85, stock: 200, isFeatured: false },
+
+  // Generic Apparel
+  { name: 'Classic Cotton T-Shirt', description: 'Soft 100% combed cotton t-shirt with a regular fit and reinforced stitching — an everyday essential.', price: 799, originalPrice: 999, category: 'Fashion', brand: 'UrbanNova', rating: 4.2, numReviews: 2210, stock: 150, isFeatured: true },
+  { name: 'Slim-Fit Denim Jeans', description: 'Stretchable slim-fit jeans with a clean look, comfortable all-day stretch and durable denim weave.', price: 1899, originalPrice: 2499, category: 'Fashion', brand: 'UrbanNova', rating: 4.1, numReviews: 876, stock: 64, isFeatured: false },
 ];
 
 (async function main() {

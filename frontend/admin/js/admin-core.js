@@ -12,7 +12,11 @@
 
 const ADMIN = (() => {
   const AUTH_KEY = 'novamart_auth_v1'; // identical to storefront app.js
-  const API_BASE = 'http://127.0.0.1:5000/api';
+  const API_BASE = (window.NOVA && window.NOVA.API_BASE) ||
+    (window.NOVA_API_BASE) ||
+    (((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '5500')
+      ? 'http://127.0.0.1:5000/api'
+      : '/api');
   let META = null;
 
   function readAuth() {

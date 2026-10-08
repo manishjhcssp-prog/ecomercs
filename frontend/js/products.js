@@ -16,7 +16,11 @@
 /* ---------- API client ---------- */
 /* Base URL is centralized in app.js (window.NOVA.API_BASE); override via
    window.NOVA_API_BASE before scripts load if ever needed. */
-const API_BASE = (window.NOVA && window.NOVA.API_BASE) || 'http://127.0.0.1:5000/api';
+const API_BASE = (window.NOVA && window.NOVA.API_BASE) ||
+  (window.NOVA_API_BASE) ||
+  (((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '5500')
+    ? 'http://127.0.0.1:5000/api'
+    : '/api');
 
 async function apiGet(path) {
   const res = await fetch(`${API_BASE}${path}`);

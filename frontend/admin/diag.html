@@ -65,7 +65,10 @@
   }
 
   /* 3) API reachability */
-  fetch('http://127.0.0.1:5000/api/health')
+  var apiHealthUrl = (((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '5500')
+    ? 'http://127.0.0.1:5000/api/health'
+    : '/api/health');
+  fetch(apiHealthUrl)
     .then(function(r){return r.json();})
     .then(function(j){
       var el=document.getElementById('c-api');

@@ -114,6 +114,16 @@
     // Load history immediately
     loadHistory();
 
+    // Reset on logout
+    document.addEventListener('nova:logout', () => {
+        sessionStorage.removeItem('nova_chat_history');
+        sessionStorage.removeItem('nova_chat_open');
+        chatWindow.classList.remove('open');
+        history = [];
+        chatBody.innerHTML = '';
+        appendMsgUI("Hi there! 👋 I'm your AI Shopper.<br/><br/>I can help you find products, check prices, and add items straight to your cart. What are you looking for today?", 'ai', false);
+    });
+
     chatForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const text = chatInput.value.trim();

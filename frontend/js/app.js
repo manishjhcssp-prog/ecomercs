@@ -51,8 +51,19 @@ function readJSON(key, fallback) {
 function writeJSON(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
 
 /* ---------- Backend API ----------
-   Single base URL for all pages; override via window.NOVA_API_BASE. */
-const API_BASE = window.NOVA_API_BASE || 'http://127.0.0.1:5000/api';
+   Single base URL for all pages; override via window.NOVA_API_BASE.
+   In local dev with dev-server.js (port 5500), points to local API on :5000.
+   In production/Vercel, defaults to '/api'. */
+function resolveApiBase() {
+  if (window.NOVA_API_BASE) return window.NOVA_API_BASE;
+  const host = window.location.hostname;
+  const port = window.location.port;
+  if ((host === 'localhost' || host === '127.0.0.1') && port === '5500') {
+    return 'http://127.0.0.1:5000/api';
+  }
+  return '/api';
+}
+const API_BASE = resolveApiBase();
 window.NOVA = { API_BASE }; // shared with products.js
 
 /** Minimal JSON fetch wrapper. Throws Error(message) on non-success responses. */
@@ -96,6 +107,7 @@ function logout() {
   renderWishPopover();
   showToast('Logged out');
   refreshAccountUI();
+  document.dispatchEvent(new CustomEvent('nova:logout'));
 }
 
 /** Guests get a clear path to login; ?next= returns them afterwards. */

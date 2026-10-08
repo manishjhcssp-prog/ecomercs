@@ -19,10 +19,24 @@ function allowedOrigins() {
   return new Set([...ALWAYS_ALLOWED, ...extra]);
 }
 
+function isOriginAllowed(origin, host) {
+  if (!origin) return false;
+  const set = allowedOrigins();
+  if (set.has('*') || set.has(origin)) return true;
+  if (host && origin.includes(host)) return true; // Same origin (e.g. unified deployment)
+  try {
+    const hostname = new URL(origin).hostname;
+    if (hostname.endsWith('.vercel.app')) return true; // Any Vercel preview or production deploy
+  } catch {
+    // ignore invalid origin
+  }
+  return false;
+}
+
 function cors(req, res, next) {
   const origin = req.headers.origin;
 
-  if (origin && allowedOrigins().has(origin)) {
+  if (origin && isOriginAllowed(origin, req.headers.host)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Vary', 'Origin');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');

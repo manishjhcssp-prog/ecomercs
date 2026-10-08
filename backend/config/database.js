@@ -38,15 +38,21 @@ async function connectDB() {
     return { connected: false, label: 'database: not configured' };
   }
 
-  const MAX_ATTEMPTS = Number(process.env.DB_CONNECT_ATTEMPTS) || 5;
-  const RETRY_DELAY_MS = Number(process.env.DB_CONNECT_RETRY_MS) || 5000;
+  // Reuse existing connection if already connected (vital for serverless containers)
+  if (mongoose.connection.readyState === 1) {
+    return { connected: true, label: 'database: connected' };
+  }
+
+  const isServerless = Boolean(process.env.VERCEL);
+  const MAX_ATTEMPTS = isServerless ? 1 : (Number(process.env.DB_CONNECT_ATTEMPTS) || 5);
+  const RETRY_DELAY_MS = isServerless ? 1000 : (Number(process.env.DB_CONNECT_RETRY_MS) || 5000);
 
   mongoose.set('strictQuery', true);
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
     try {
       await mongoose.connect(uri, {
-        serverSelectionTimeoutMS: 8000, // fail fast instead of hanging startup
+        serverSelectionTimeoutMS: isServerless ? 3000 : 8000, // fail fast on serverless
       });
       console.log(`[db] Connected to MongoDB "${mongoose.connection.name}" at ${mongoose.connection.host}`);
       return { connected: true, label: 'database: connected' };
