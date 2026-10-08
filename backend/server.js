@@ -47,6 +47,29 @@ app.use(express.json({
 
 app.use('/api', apiRoutes);
 
+// Static frontend serving fallback for serverless hosting / unified deployments
+const staticDir = path.join(__dirname, '..', 'public');
+const fallbackStaticDir = path.join(__dirname, '..', 'frontend');
+const serveDir = fs.existsSync(staticDir) ? staticDir : fallbackStaticDir;
+
+app.use(express.static(serveDir));
+
+app.get('/', (req, res) => {
+  const indexFile = path.join(serveDir, 'index.html');
+  if (fs.existsSync(indexFile)) {
+    return res.sendFile(indexFile);
+  }
+  res.sendFile(path.join(fallbackStaticDir, 'index.html'));
+});
+
+app.get('/admin', (req, res) => {
+  const adminFile = path.join(serveDir, 'admin', 'index.html');
+  if (fs.existsSync(adminFile)) {
+    return res.sendFile(adminFile);
+  }
+  res.sendFile(path.join(fallbackStaticDir, 'admin', 'index.html'));
+});
+
 // Unknown routes get JSON 404s; every error ends in one central handler.
 app.use(notFoundHandler);
 app.use(errorHandler);

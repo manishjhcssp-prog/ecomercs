@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NovaMart — shop quality products at great prices: electronics, fashion, beauty, home and more." />
+  <title>NovaMart — Discover Products You'll Love</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/products.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-base="">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <button class="icon-btn nav-toggle" id="nav-toggle" aria-expanded="false"
+        aria-controls="mobile-nav" aria-label="Open menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">N</span>NovaMart</a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="pages/products.html">Products</a></li>
+          <li><a href="index.html#categories">Categories</a></li>
+          <li><a href="pages/products.html?sale=1">Deals</a></li>
+        </ul>
+      </nav>
+
+      <form class="nav-search" action="pages/products.html" method="get" role="search">
+        <input class="input" type="search" name="q" placeholder="Search products..." aria-label="Search products" />
+        <button type="submit" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        </button>
+      </form>
+
+      <div class="header-actions">
+        <div class="wish-wrap">
+          <button class="icon-btn" id="wish-btn" aria-haspopup="true" aria-expanded="false" aria-label="Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20.8C6.9 17 3.5 13.7 3.5 10a4.6 4.6 0 0 1 4.6-4.6c1.6 0 3 .8 3.9 2.1a4.8 4.8 0 0 1 3.9-2.1A4.6 4.6 0 0 1 20.5 10c0 3.7-3.4 7-8.5 10.8Z"/></svg>
+            <span class="count-badge" id="wish-count" hidden>0</span>
+          </button>
+          <div class="wish-pop" id="wish-pop" hidden>
+            <h3>Wishlist</h3>
+            <ul id="wish-list"></ul>
+          </div>
+        </div>
+        <a class="icon-btn" href="pages/cart.html" aria-label="Shopping cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/><path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h7.6a1.5 1.5 0 0 0 1.5-1.2L19.5 8H6"/></svg>
+          <span class="count-badge" id="cart-count" hidden>0</span>
+        </a>
+        <a class="icon-btn" href="pages/login.html" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="mobile-nav" id="mobile-nav" hidden>
+      <nav aria-label="Mobile">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="pages/products.html">Products</a></li>
+          <li><a href="index.html#categories">Categories</a></li>
+          <li><a href="pages/products.html?sale=1">Deals</a></li>
+          <li><a href="pages/cart.html">Cart</a></li>
+          <li><a href="pages/login.html">Sign in</a></li>
+        </ul>
+      </nav>
+      <form class="nav-search" action="pages/products.html" method="get" role="search">
+        <input class="input" type="search" name="q" placeholder="Search products..." aria-label="Search products" />
+        <button type="submit" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        </button>
+      </form>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-inner">
+        <div>
+          <span class="hero-eyebrow">New season · New arrivals</span>
+          <h1 id="hero-title">Discover Products You'll <span class="accent">Love</span></h1>
+          <p class="hero-sub">Shop quality products at great prices — electronics, fashion, beauty,
+            home essentials and more, delivered straight to your door.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="pages/products.html">Shop Now</a>
+            <a class="btn btn-outline" href="#categories">Explore Categories</a>
+          </div>
+          <ul class="hero-trust">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.2 2.4 2.4 4.6-5"/></svg> Free delivery over ₹999</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.2 2.4 2.4 4.6-5"/></svg> 7-day easy returns</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.2 2.4 2.4 4.6-5"/></svg> Secure checkout</li>
+          </ul>
+        </div>
+
+        <div class="hero-art" role="img" aria-label="Illustration of a shopping bag with special-offer badges">
+          <div class="hero-tile">
+            <svg viewBox="0 0 240 210" aria-hidden="true">
+              <rect x="58" y="66" width="124" height="112" rx="16" fill="#2563eb"/>
+              <path d="M92 66V52a28 28 0 0 1 56 0v14" fill="none" stroke="#1e3a8a" stroke-width="11" stroke-linecap="round"/>
+              <rect x="58" y="66" width="124" height="26" rx="13" fill="#ffffff" opacity="0.18"/>
+              <circle cx="120" cy="130" r="18" fill="#ffffff" opacity="0.95"/>
+              <path d="m112 130 5.5 5.5L128 124" stroke="#2563eb" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M30 40h14M37 33v14" stroke="#93c5fd" stroke-width="4" stroke-linecap="round"/>
+              <path d="M202 148h12M208 142v12" stroke="#93c5fd" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="float-chip chip-a"><span class="chip-icon" aria-hidden="true">★</span>4.8-rated demo store</p>
+          <p class="float-chip chip-b"><span class="chip-icon" aria-hidden="true">₹</span>Free delivery over ₹999</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits" aria-label="Store benefits">
+      <div class="container benefits-grid">
+        <p class="benefit"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="6" width="13" height="10" rx="1.5"/><path d="M14.5 9h4l3 3.5V16h-7"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg><span><b>Fast delivery</b>On orders over ₹999</span></p>
+        <p class="benefit"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4"/><path d="M3 4v4h4"/></svg><span><b>7-day returns</b>No questions asked</span></p>
+        <p class="benefit"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 4.5 5.5v6c0 4.6 3.2 8 7.5 10 4.3-2 7.5-5.4 7.5-10v-6Z"/></svg><span><b>Secure payments</b>Coming in Phase 6</span></p>
+        <p class="benefit"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 11 3.8A2 2 0 0 0 9.6 3H4v5.6c0 .5.2 1 .6 1.4l9.6 9.6a2 2 0 0 0 2.8 0l3.6-3.6a2 2 0 0 0 0-2.6Z"/><circle cx="7.5" cy="7.5" r="0.5"/></svg><span><b>Top brands</b>Quality you can trust</span></p>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="section" id="categories" aria-labelledby="categories-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="categories-title">Shop by Category</h2>
+          <a class="see-all" href="pages/products.html">View all â†’</a>
+        </div>
+        <div class="category-grid">
+          <a class="category-card" href="pages/products.html?cat=Electronics">
+            <span class="cat-tile" style="--tint:#e0e7ff" aria-hidden="true">E</span>
+            <h3>Electronics</h3><span>42 items</span>
+          </a>
+          <a class="category-card" href="pages/products.html?cat=Fashion">
+            <span class="cat-tile" style="--tint:#fce7f3" aria-hidden="true">F</span>
+            <h3>Fashion</h3><span>128 items</span>
+          </a>
+          <a class="category-card" href="pages/products.html?cat=Beauty">
+            <span class="cat-tile" style="--tint:#fef3c7" aria-hidden="true">B</span>
+            <h3>Beauty</h3><span>76 items</span>
+          </a>
+          <a class="category-card" href="pages/products.html?cat=Home">
+            <span class="cat-tile" style="--tint:#d1fae5" aria-hidden="true">H</span>
+            <h3>Home</h3><span>94 items</span>
+          </a>
+          <a class="category-card" href="pages/products.html?cat=Accessories">
+            <span class="cat-tile" style="--tint:#ede9fe" aria-hidden="true">A</span>
+            <h3>Accessories</h3><span>61 items</span>
+          </a>
+          <a class="category-card" href="pages/products.html?cat=Sports">
+            <span class="cat-tile" style="--tint:#e0f2fe" aria-hidden="true">S</span>
+            <h3>Sports</h3><span>53 items</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured products -->
+    <section class="section" style="padding-top:8px" aria-labelledby="featured-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="featured-title">Featured Products</h2>
+          <a class="see-all" href="pages/products.html">View all products â†’</a>
+        </div>
+        <div class="product-grid" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <!-- Promo banner -->
+    <section class="promo" aria-label="Sale announcement">
+      <div class="container promo-inner">
+        <h2>Mid-Season Sale — up to 40% off across categories</h2>
+        <a class="btn btn-primary" href="pages/products.html?sale=1">Shop the Sale</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">N</span>NovaMart</a>
+        <p>A demo storefront built as part of a phased e-commerce project.
+          Quality products, fair prices, fast delivery.</p>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <ul class="footer-links">
+          <li><a href="pages/products.html">All Products</a></li>
+          <li><a href="pages/products.html?cat=Electronics">Electronics</a></li>
+          <li><a href="pages/products.html?cat=Fashion">Fashion</a></li>
+          <li><a href="pages/products.html?cat=Beauty">Beauty</a></li>
+          <li><a href="pages/products.html?sale=1">Deals</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Help</h3>
+        <ul class="footer-links">
+          <li><a href="pages/cart.html">Your Cart</a></li>
+          <li><a href="pages/login.html">Sign In</a></li>
+          <li><a href="pages/register.html">Create Account</a></li>
+          <li><a href="index.html#categories">Categories</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Newsletter</h3>
+        <p style="font-size:.9rem;color:#94a3b8">Get updates on new arrivals and exclusive deals.</p>
+        <form class="newsletter" data-demo-submit data-demo-message="Subscribed (demo) — email arrives in a later phase." novalidate="">
+          <label class="skip-link" for="newsletter-email">Email address</label>
+          <input class="input" id="newsletter-email" type="email" placeholder="you@example.com"
+            required aria-label="Email address for newsletter" autocomplete="email" />
+          <button class="btn btn-primary btn-sm" type="submit" style="padding:.55rem 1rem">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© 2026 NovaMart — demo e-commerce project.</span>
+      <span>Built with HTML, CSS &amp; JavaScript.</span>
+    </div>
+  </footer>
+
+  <script src="js/app.js?v=20260910a" defer></script>
+  <script src="js/products.js?v=20260910a" defer></script>
+</body>
+</html>
